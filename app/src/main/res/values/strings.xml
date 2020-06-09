@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">ToDoList</string>
+    <string name="title">Title</string>
+    <string name="save">Save</string>
+    <string name="completed">Completed</string>
+    <string name="compl">(%d</string>
+    <string name="all">/%d)</string>
+    <string name="empty_list">You have no tasks</string>
+    <string name="created_on">"Created on"</string>
+    <string name="delete_all">Delete all tasks</string>
+    <string name="delete_completed">Delete completed tasks</string>
+    <string name="undo">Undo</string>
+    <string name="description">Description</string>
+    <string name="priority">Priority</string>
+</resources>
