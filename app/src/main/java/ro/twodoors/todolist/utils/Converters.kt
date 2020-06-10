@@ -1,6 +1,7 @@
 package ro.twodoors.todolist.utils
 
 import androidx.room.TypeConverter
+import ro.twodoors.todolist.model.Category
 
 class Converters {
 
@@ -24,5 +25,15 @@ class Converters {
             Priority.MEDIUM -> 2
             Priority.HIGH -> 3
         }
+    }
+
+    @TypeConverter
+    fun stringToCategory(value: String): Category? {
+        return Category(value)
+    }
+
+    @TypeConverter
+    fun categoryToString(category: Category): String {
+        return category.categoryName
     }
 }

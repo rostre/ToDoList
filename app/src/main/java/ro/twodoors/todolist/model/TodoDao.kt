@@ -32,4 +32,13 @@ interface TodoDao {
 
     @Query("UPDATE todo_table set completed = :isChecked WHERE id = :id")
     suspend fun completeTodo(id: Int, isChecked: Boolean)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertCategory(category: Category)
+
+    @Query("SELECT * FROM category_table ORDER BY relations, category")
+    fun getAllCategories() : LiveData<List<Category>>
+
+    @Query("SELECT * FROM todo_table WHERE category = :categoryName ORDER BY title")
+    fun getTasksByCategory(categoryName: String) : LiveData<List<Todo>>
 }

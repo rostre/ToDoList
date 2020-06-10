@@ -45,7 +45,7 @@ class AddTaskActivity : AppCompatActivity() {
         priority_picker.displayedValues = pickerValues
         priority_picker.setOnValueChangedListener{ numberPicker, i, i2 ->
             priority = numberPicker.value
-            Log.d("setupPicker()", "value selected: ${priority}  ")
+            Log.d("setupPicker()", "value selected: $priority")
         }
     }
 }

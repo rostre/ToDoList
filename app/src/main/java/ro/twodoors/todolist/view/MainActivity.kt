@@ -1,16 +1,17 @@
 package ro.twodoors.todolist.view
 
-import android.app.ActivityOptions
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import ro.twodoors.todolist.R
@@ -20,7 +21,7 @@ import ro.twodoors.todolist.utils.SwipeToDeleteCallback
 import ro.twodoors.todolist.viewmodel.TodoViewModel
 
 
-class MainActivity : AppCompatActivity(), MainAdapter.OnClickListener {
+class MainActivity : AppCompatActivity(), MainAdapter.OnClickListener, OnClickListener {
 
     private lateinit var viewModel: TodoViewModel
 
@@ -33,6 +34,13 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnClickListener {
 
         val adapter = MainAdapter(this)
         recyclerView.adapter = adapter
+
+        val categoryAdapter = CategoryAdapter(this)
+        recyclerViewCategory.adapter = categoryAdapter
+
+        viewModel.allCategories.observe(this, Observer { categories ->
+            categoryAdapter.populateCategories(categories)
+        })
 
         viewModel.allTodos.observe(this, Observer { todos ->
                 binding.hasTasks = !todos.isNullOrEmpty()
@@ -51,12 +59,6 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnClickListener {
         fab.setOnClickListener {
             val intent = Intent(this, AddTaskActivity::class.java)
             startActivity(intent)
-//            val bundle = ActivityOptionsCompat.makeCustomAnimation(
-//                this,
-//                R.anim.left_to_right, R.anim.left_to_right
-//            ).toBundle()
-//            startActivity(intent,bundle)
-            //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
         val swipeHandler = object : SwipeToDeleteCallback(this@MainActivity){
@@ -72,6 +74,31 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnClickListener {
 
     override fun onCheckboxChecked(id: Int, isChecked: Boolean) {
         viewModel.completeTodo(id, isChecked)
+    }
+
+    override fun onCategorySelected(title: String) {
+        viewModel.getTasksByCategory(title)
+    }
+
+    override fun addCategory() {
+        val input = TextInputEditText(this)
+        val layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        input.layoutParams = layoutParams
+        input.hint = "Category Name"
+
+        AlertDialog.Builder(this)
+            .setTitle("Add Category")
+            .setView(input)
+            .setPositiveButton("Save") { _, _ ->
+                val name = input.text.toString()
+                viewModel.insertCategory(name)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

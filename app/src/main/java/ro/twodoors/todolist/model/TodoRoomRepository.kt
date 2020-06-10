@@ -18,9 +18,13 @@ class TodoRoomRepository(private val todoDao: TodoDao) : TodoRepository {
         return todoDao.getTodosCompletedCount()
     }
 
-//    override suspend fun completeTodo(id: Int) {
-//        todoDao.completeTodo(id)
-//    }
+    override fun getAllCategories(): LiveData<List<Category>> {
+        return todoDao.getAllCategories()
+    }
+
+    override fun getTasksByCategory(categoryName: String): LiveData<List<Todo>> {
+        return todoDao.getTasksByCategory(categoryName)
+    }
 
     override suspend fun completeTodo(id: Int, isChecked: Boolean) {
         todoDao.completeTodo(id, isChecked)
@@ -28,6 +32,10 @@ class TodoRoomRepository(private val todoDao: TodoDao) : TodoRepository {
 
     override suspend fun insert(todo: Todo){
         todoDao.insert(todo)
+    }
+
+    override suspend fun insertCategory(category: Category) {
+        todoDao.insertCategory(category)
     }
 
     override suspend fun update(todo: Todo){
