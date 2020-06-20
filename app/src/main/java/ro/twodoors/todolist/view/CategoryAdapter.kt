@@ -29,7 +29,8 @@ class CategoryAdapter(val onClickListener: OnClickListener) : ListAdapter<DataIt
             val items = if(list.isNullOrEmpty())
                             listOf(DataItem.AddCategory)
                         else
-                            listOf(DataItem.AllTasks) + list.map { DataItem.CategoryItem(it) } + listOf(DataItem.AddCategory)
+                            listOf(DataItem.AllTasks) + list.map {
+                                DataItem.CategoryItem(it) } + listOf(DataItem.AddCategory)
 
             withContext(Dispatchers.Main){
                 submitList(items)
@@ -52,7 +53,6 @@ class CategoryAdapter(val onClickListener: OnClickListener) : ListAdapter<DataIt
             }
         }
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
@@ -134,7 +134,7 @@ sealed class DataItem {
     abstract val title: String
 
     data class CategoryItem(val category: Category): DataItem() {
-        override val title = category.categoryName
+        override val title = category.name
     }
 
     object AllTasks: DataItem() {

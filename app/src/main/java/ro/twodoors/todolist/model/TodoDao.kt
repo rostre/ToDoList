@@ -21,7 +21,7 @@ interface TodoDao {
     @Query("DELETE FROM todo_table WHERE completed = 1")
     suspend fun deleteCompletedTasks()
 
-    @Query("SELECT * FROM todo_table ORDER BY priority DESC, title")
+    @Query("SELECT * FROM todo_table ORDER BY dueDate DESC, title")
     fun getAll() : LiveData<List<Todo>>
 
     @Query("SELECT COUNT(*) FROM todo_table")
@@ -36,9 +36,18 @@ interface TodoDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCategory(category: Category)
 
-    @Query("SELECT * FROM category_table ORDER BY relations, category")
+    @Query("SELECT * FROM category_table ORDER BY name")
     fun getAllCategories() : LiveData<List<Category>>
 
-    @Query("SELECT * FROM todo_table WHERE category = :categoryName ORDER BY title")
-    fun getTasksByCategory(categoryName: String) : LiveData<List<Todo>>
+    @Query("SELECT name FROM category_table ORDER BY name")
+    fun getCategoryNames() : LiveData<List<String>>
+
+    @Query("SELECT COUNT(*) FROM todo_table WHERE categoryName = :categoryName ORDER BY title")
+    fun getTasksForCategory(categoryName: String) : LiveData<Int>
+
+    @Query("SELECT * FROM category_table ORDER BY name")
+    fun getCategories() : List<Category>
+
+    @Update
+    suspend fun updateCategory(category: Category)
 }

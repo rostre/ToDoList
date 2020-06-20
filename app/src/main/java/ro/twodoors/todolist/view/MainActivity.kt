@@ -20,7 +20,6 @@ import ro.twodoors.todolist.obtainViewModel
 import ro.twodoors.todolist.utils.SwipeToDeleteCallback
 import ro.twodoors.todolist.viewmodel.TodoViewModel
 
-
 class MainActivity : AppCompatActivity(), MainAdapter.OnClickListener, OnClickListener {
 
     private lateinit var viewModel: TodoViewModel
@@ -58,6 +57,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnClickListener, OnClickLi
 
         fab.setOnClickListener {
             val intent = Intent(this, AddTaskActivity::class.java)
+            //val intent = Intent(this, AddCategoryActivity::class.java)
             startActivity(intent)
         }
 
@@ -77,7 +77,10 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnClickListener, OnClickLi
     }
 
     override fun onCategorySelected(title: String) {
-        viewModel.getTasksByCategory(title)
+        //viewModel.getTasksByCategory(title)
+        val intent = Intent(this, CategoryActivity::class.java)
+        intent.putExtra("CAT", title)
+        startActivity(intent)
     }
 
     override fun addCategory() {

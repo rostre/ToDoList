@@ -27,14 +27,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:onClick="@{() -> clickListener.onCategorySelected(category.categoryName)}">
+            android:onClick="@{() -> clickListener.onCategorySelected(category.name)}">
 
             <TextView
                 android:id="@+id/tvCategoryName"
                 android:layout_margin="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{category.categoryName}"
+                android:text="@{category.name}"
                 tools:text="Dribbble Shots"
                 android:maxLines="3"
                 android:textSize="20sp"
@@ -44,14 +44,13 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
-                android:id="@+id/tvCategoryRelations"
+                android:id="@+id/tvCategoryTasks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="@{Integer.toString(category.relations)}"
                 tools:text="0"
                 android:textColor="@android:color/white"/>
 
@@ -61,8 +60,8 @@
                 android:layout_marginStart="8dp"
                 android:text="@string/tasks"
                 android:textColor="@android:color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/tvCategoryRelations"
-                app:layout_constraintStart_toEndOf="@+id/tvCategoryRelations" />
+                app:layout_constraintBottom_toBottomOf="@+id/tvCategoryTasks"
+                app:layout_constraintStart_toEndOf="@+id/tvCategoryTasks" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

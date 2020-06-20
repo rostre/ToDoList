@@ -18,12 +18,20 @@ class TodoRoomRepository(private val todoDao: TodoDao) : TodoRepository {
         return todoDao.getTodosCompletedCount()
     }
 
+    override fun getCategoryNames(): LiveData<List<String>> {
+        return todoDao.getCategoryNames()
+    }
+
     override fun getAllCategories(): LiveData<List<Category>> {
         return todoDao.getAllCategories()
     }
 
-    override fun getTasksByCategory(categoryName: String): LiveData<List<Todo>> {
-        return todoDao.getTasksByCategory(categoryName)
+    override fun getTasksForCategory(categoryName: String): LiveData<Int> {
+        return todoDao.getTasksForCategory(categoryName)
+    }
+
+    override fun getCategories(): List<Category> {
+        return todoDao.getCategories()
     }
 
     override suspend fun completeTodo(id: Int, isChecked: Boolean) {
@@ -54,4 +62,7 @@ class TodoRoomRepository(private val todoDao: TodoDao) : TodoRepository {
         todoDao.deleteCompletedTasks()
     }
 
+    override suspend fun updateCategory(category: Category) {
+        todoDao.updateCategory(category)
+    }
 }

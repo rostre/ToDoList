@@ -1,18 +1,21 @@
 package ro.twodoors.todolist.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import ro.twodoors.todolist.utils.Priority
+import androidx.room.*
+import androidx.room.ForeignKey.CASCADE
 
-@Entity(tableName = "todo_table")
-data class Todo(
-    @PrimaryKey(autoGenerate = true) val id: Int? = null,
+@Entity(tableName = "todo_table",
+    foreignKeys = [ForeignKey(
+        entity = Category::class,
+        parentColumns = ["name"],
+        childColumns = ["categoryName"],
+       onDelete = CASCADE,
+       onUpdate = CASCADE)])
+ data class Todo(
+    @PrimaryKey(autoGenerate = false) var id: Int? = null,
     var title: String,
     var description: String,
-    var category: Category,
-    var priority: Priority?,
+    var categoryName: String,
+    var dueDate: Long?,
     var completed: Boolean = false,
-    var createdOn: Long?) {
-
-}
+    var createdOn: Long?)
 

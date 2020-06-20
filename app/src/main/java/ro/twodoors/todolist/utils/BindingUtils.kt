@@ -18,26 +18,26 @@ fun View.bindIsGone(isGone: Boolean) {
     }
 }
 
-@BindingAdapter("android:applyPriority")
-fun View.applyPriorityColor(priority: Priority) {
-    when(priority){
-        Priority.HIGH -> setBackgroundColor(resources.getColor(R.color.priority_high))
-        Priority.MEDIUM -> setBackgroundColor(resources.getColor(R.color.priority_medium))
-        Priority.LOW -> setBackgroundColor(resources.getColor(R.color.priority_low))
-        Priority.DEFAULT -> setBackgroundColor(Color.WHITE)
-    }
-}
+//@BindingAdapter("android:applyPriority")
+//fun View.applyPriorityColor(priority: Priority) {
+//    when(priority){
+//        Priority.HIGH -> setBackgroundColor(resources.getColor(R.color.priority_high))
+//        Priority.MEDIUM -> setBackgroundColor(resources.getColor(R.color.priority_medium))
+//        Priority.LOW -> setBackgroundColor(resources.getColor(R.color.priority_low))
+//        Priority.DEFAULT -> setBackgroundColor(Color.WHITE)
+//    }
+//}
 
-fun intToPriority(value: Int): Priority? {
-    var priority: Priority? = null
-    when(value){
-        0 -> priority = Priority.DEFAULT
-        1 -> priority = Priority.LOW
-        2 -> priority = Priority.MEDIUM
-        3 -> priority = Priority.HIGH
-    }
-    return priority
-}
+//fun intToPriority(value: Int): Priority? {
+//    var priority: Priority? = null
+//    when(value){
+//        0 -> priority = Priority.DEFAULT
+//        1 -> priority = Priority.LOW
+//        2 -> priority = Priority.MEDIUM
+//        3 -> priority = Priority.HIGH
+//    }
+//    return priority
+//}
 
 fun convertLongToString(timeInMillis: Long) : String{
     val calendar = Calendar.getInstance()
@@ -46,10 +46,10 @@ fun convertLongToString(timeInMillis: Long) : String{
     return sdf.format(calendar.time)
 }
 
-
-enum class Priority {
-    DEFAULT,
-    LOW,
-    MEDIUM,
-    HIGH
-}
+//
+//enum class Priority {
+//    DEFAULT,
+//    LOW,
+//    MEDIUM,
+//    HIGH
+//}

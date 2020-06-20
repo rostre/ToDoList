@@ -1,21 +1,22 @@
 package ro.twodoors.todolist.view
 
+import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.NumberPicker
+import android.view.View
+import android.widget.AdapterView
+import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_add_task.*
 import ro.twodoors.todolist.R
 import ro.twodoors.todolist.obtainViewModel
-import ro.twodoors.todolist.utils.Priority
-import ro.twodoors.todolist.utils.intToPriority
 import ro.twodoors.todolist.viewmodel.AddViewModel
+import java.util.*
 
 class AddTaskActivity : AppCompatActivity() {
 
     private lateinit var addViewModel: AddViewModel
-    private var priority: Int = 0
+    private lateinit var spinnerAdapter: SpinnerCategoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +26,11 @@ class AddTaskActivity : AppCompatActivity() {
         btnSave.setOnClickListener{
             addViewModel.todo.title = txtTitle.text.toString()
             addViewModel.todo.description = txtDescription.text.toString()
-            addViewModel.todo.priority = intToPriority(priority)
+            //var ss = spinner.selectedItem as String
+            //addViewModel.todo.categoryName = spinner.selectedItem.toString().replace("\n","")
+            //addViewModel.todo.categoryName = ss.replace("\n","")
+            if (switcher.isChecked)
+                addViewModel.todo.dueDate = txtDueDate.text.toString().toLong()
 
             val message = addViewModel.save()
             if (message != null) {
@@ -34,18 +39,50 @@ class AddTaskActivity : AppCompatActivity() {
                 finish()
             }
         }
-        setupPicker()
-    }
 
-    private fun setupPicker(){
-        priority_picker.minValue = 0
-        priority_picker.maxValue = 3
+        addViewModel.allCategories.observe(this, Observer { categoriesList ->
+            spinnerAdapter = SpinnerCategoryAdapter(this, categoriesList)
+            spinner.adapter = spinnerAdapter
+        })
 
-        val pickerValues = arrayOf(Priority.DEFAULT.name, Priority.LOW.name, Priority.MEDIUM.name, Priority.HIGH.name)
-        priority_picker.displayedValues = pickerValues
-        priority_picker.setOnValueChangedListener{ numberPicker, i, i2 ->
-            priority = numberPicker.value
-            Log.d("setupPicker()", "value selected: $priority")
+        spinner.onItemSelectedListener = object  : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val item = spinnerAdapter.getItem(position)
+                addViewModel.todo.categoryName = item!!
+                //Toast.makeText(this@AddTaskActivity, "selected ${item?.categoryName}", Toast.LENGTH_SHORT).show()
+            }
         }
+
+        switcher.setOnCheckedChangeListener{ compoundButton, isChecked ->
+            if (isChecked){
+                val c = Calendar.getInstance()
+                val y = c.get(Calendar.YEAR)
+                val m = c.get(Calendar.MONTH)
+                val d = c.get(Calendar.DAY_OF_MONTH)
+                val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, day ->
+                    ivCalendar.visibility = View.VISIBLE
+                    txtDueDate.visibility = View.VISIBLE
+                    txtDueDate.text = "${day} - ${month} - ${year}"
+                }, y , m, d )
+
+                datePicker.setOnCancelListener{
+                    txtDueDate.text = ""
+                    txtDueDate.visibility = View.GONE
+                    ivCalendar.visibility = View.GONE
+                    switcher.isChecked = false
+                }
+
+                datePicker.show()
+            } else{
+                ivCalendar.visibility = View.GONE
+                txtDueDate.text = ""
+                txtDueDate.visibility = View.GONE
+            }
+        }
+
     }
+
+
 }

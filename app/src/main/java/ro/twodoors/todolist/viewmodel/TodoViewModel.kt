@@ -35,11 +35,7 @@ class TodoViewModel(private val repository: TodoRepository) : ViewModel()   {
         repository.completeTodo(id, isChecked)
     }
 
-    fun getTasksByCategory(categoryName: String) = viewModelScope.launch(Dispatchers.IO){
-        repository.getTasksByCategory(categoryName)
-    }
-
     fun insertCategory(categoryName: String) = viewModelScope.launch (Dispatchers.IO){
-        repository.insertCategory(Category(categoryName))
+        repository.insertCategory(Category(name = categoryName))
     }
 }

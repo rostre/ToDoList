@@ -8,8 +8,7 @@ import androidx.room.TypeConverters
 import kotlinx.coroutines.CoroutineScope
 import ro.twodoors.todolist.utils.Converters
 
-@Database(entities = [Todo::class, Category::class], version = 5, exportSchema = false)
-@TypeConverters(Converters::class)
+@Database(entities = [Todo::class, Category::class], version = 22, exportSchema = false)
 abstract class TodoDatabase : RoomDatabase() {
 
     abstract fun todoDao() : TodoDao

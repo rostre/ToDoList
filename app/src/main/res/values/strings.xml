@@ -6,7 +6,7 @@
     <string name="compl">(%d</string>
     <string name="all">/%d)</string>
     <string name="empty_list">You have no tasks</string>
-    <string name="created_on">"Created on"</string>
+    <string name="created_on">"from"</string>
     <string name="delete_all">Delete all tasks</string>
     <string name="delete_completed">Delete completed tasks</string>
     <string name="undo">Undo</string>
@@ -15,4 +15,6 @@
     <string name="add_category">Add Category</string>
     <string name="all_tasks">All Tasks</string>
     <string name="tasks">tasks</string>
+    <string name="category">Category</string>
+    <string name="tasksCapital">Tasks</string>
 </resources>
