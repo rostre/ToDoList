@@ -17,4 +17,9 @@
     <string name="tasks">tasks</string>
     <string name="category">Category</string>
     <string name="tasksCapital">Tasks</string>
+    <string name="enter_category_name">Enter category name</string>
+    <string name="pick_a_color_for_category">Pick a color for category</string>
+    <string name="cancel">CANCEL</string>
+    <string name="due">due</string>
+    <string name="due_date">Due Date</string>
 </resources>

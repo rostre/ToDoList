@@ -1,5 +1,7 @@
-package ro.twodoors.todolist.view
+package ro.twodoors.todolist.view.adapter
 
+import android.app.Activity
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -13,6 +15,8 @@ import ro.twodoors.todolist.databinding.CategoryAddItemBinding
 import ro.twodoors.todolist.databinding.CategoryAllTasksItemBinding
 import ro.twodoors.todolist.databinding.CategoryListItemBinding
 import ro.twodoors.todolist.model.Category
+import ro.twodoors.todolist.model.Todo
+import ro.twodoors.todolist.view.OnClickListener
 import java.lang.ClassCastException
 
 private val ITEM_VIEW_TYPE_ALL_TASKS = 0
@@ -20,8 +24,10 @@ private val ITEM_VIEW_TYPE_ITEM = 1
 private val ITEM_VIEW_TYPE_ADD_CATEGORY = 2
 
 
-class CategoryAdapter(val onClickListener: OnClickListener) : ListAdapter<DataItem, RecyclerView.ViewHolder>(CategoryDiffCallback()) {
-
+class CategoryAdapter(val onClickListener: OnClickListener) : ListAdapter<DataItem, RecyclerView.ViewHolder>(
+    CategoryDiffCallback()
+) {
+    var tasks: List<Todo> = listOf()
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
     fun populateCategories(list : List<Category>?){
@@ -29,8 +35,7 @@ class CategoryAdapter(val onClickListener: OnClickListener) : ListAdapter<DataIt
             val items = if(list.isNullOrEmpty())
                             listOf(DataItem.AddCategory)
                         else
-                            listOf(DataItem.AllTasks) + list.map {
-                                DataItem.CategoryItem(it) } + listOf(DataItem.AddCategory)
+                            listOf(DataItem.AllTasks) + list.map { DataItem.CategoryItem(it) } + listOf(DataItem.AddCategory)
 
             withContext(Dispatchers.Main){
                 submitList(items)
@@ -38,11 +43,25 @@ class CategoryAdapter(val onClickListener: OnClickListener) : ListAdapter<DataIt
         }
     }
 
+    fun setTodos(tasks: List<Todo>){
+        this.tasks = tasks
+        notifyDataSetChanged()
+    }
+
     class CategoryViewHolder(val binding: CategoryListItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(item: Category, clickListener: OnClickListener){
             binding.category = item
+            val sharedPref = itemView.context.getSharedPreferences("CATEGORY", Context.MODE_PRIVATE)
+            binding.cardCategory.setCardBackgroundColor(sharedPref.getInt(item.name, 0))
             binding.clickListener = clickListener
             binding.executePendingBindings()
+        }
+
+        fun setupTasks(tasks: List<Todo>){
+            val result = tasks
+                .filter { it ->
+                    it.categoryName == binding.category?.name }
+            binding.tvCategoryTasks.text = result.count().toString()
         }
 
         companion object{
@@ -52,13 +71,21 @@ class CategoryAdapter(val onClickListener: OnClickListener) : ListAdapter<DataIt
                 return CategoryViewHolder(binding)
             }
         }
+
+        fun getColorFromSharedPref(activity: Activity, key: String) : Int {
+            val sharedPref = activity.getPreferences(Context.MODE_PRIVATE) ?: return 0
+            return sharedPref.getInt(key, 0)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
             ITEM_VIEW_TYPE_ALL_TASKS -> AllTasksViewHolder.from(parent)
+
             ITEM_VIEW_TYPE_ITEM -> CategoryViewHolder.from(parent)
+
             ITEM_VIEW_TYPE_ADD_CATEGORY -> AddCategoryViewHolder.from(parent)
+
             else -> throw ClassCastException("Unknown viewType $viewType")
         }
     }
@@ -76,10 +103,11 @@ class CategoryAdapter(val onClickListener: OnClickListener) : ListAdapter<DataIt
             is CategoryViewHolder -> {
                 val item = getItem(position) as DataItem.CategoryItem
                 holder.bind(item.category, onClickListener)
+                holder.setupTasks(tasks)
             }
 
             is AllTasksViewHolder -> {
-                holder.bind(onClickListener )
+                holder.bind("ALL TASKS", onClickListener )
             }
 
             is AddCategoryViewHolder -> {
@@ -89,7 +117,8 @@ class CategoryAdapter(val onClickListener: OnClickListener) : ListAdapter<DataIt
     }
 
     class AllTasksViewHolder(val binding: CategoryAllTasksItemBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(clickListener: OnClickListener){
+        fun bind(title: String, clickListener: OnClickListener){
+            binding.title = title
             binding.clickListener = clickListener
             binding.executePendingBindings()
         }

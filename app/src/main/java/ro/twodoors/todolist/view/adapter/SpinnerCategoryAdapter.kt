@@ -1,4 +1,4 @@
-package ro.twodoors.todolist.view
+package ro.twodoors.todolist.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import ro.twodoors.todolist.R
-import ro.twodoors.todolist.model.Category
 
 class SpinnerCategoryAdapter(
     context: Context, list: List<String>) : ArrayAdapter<String>(context, 0, list) {

@@ -2,10 +2,11 @@
 
 package ro.twodoors.todolist.utils
 
-import android.graphics.Color
+import android.app.Activity
+import android.content.Context
 import android.view.View
 import androidx.databinding.BindingAdapter
-import ro.twodoors.todolist.R
+import ro.twodoors.todolist.view.activity.MainActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,25 +19,15 @@ fun View.bindIsGone(isGone: Boolean) {
     }
 }
 
-//@BindingAdapter("android:applyPriority")
-//fun View.applyPriorityColor(priority: Priority) {
-//    when(priority){
-//        Priority.HIGH -> setBackgroundColor(resources.getColor(R.color.priority_high))
-//        Priority.MEDIUM -> setBackgroundColor(resources.getColor(R.color.priority_medium))
-//        Priority.LOW -> setBackgroundColor(resources.getColor(R.color.priority_low))
-//        Priority.DEFAULT -> setBackgroundColor(Color.WHITE)
-//    }
+//fun getColorFromSharedPref(activity: Activity, key: String) : Int {
+//    val sharedPref = activity.getPreferences(Context.MODE_PRIVATE) ?: return 0
+//    return sharedPref.getInt(key, 0)
 //}
 
-//fun intToPriority(value: Int): Priority? {
-//    var priority: Priority? = null
-//    when(value){
-//        0 -> priority = Priority.DEFAULT
-//        1 -> priority = Priority.LOW
-//        2 -> priority = Priority.MEDIUM
-//        3 -> priority = Priority.HIGH
-//    }
-//    return priority
+//@BindingAdapter("android:setBackgroundColor")
+//fun View.getColorFromSharedPref(activity: Activity, key: String) {
+//    val sharedPref = activity.getPreferences(Context.MODE_PRIVATE) ?: return
+//    setBackgroundColor(sharedPref.getInt(key, 0))
 //}
 
 fun convertLongToString(timeInMillis: Long) : String{
@@ -45,11 +36,3 @@ fun convertLongToString(timeInMillis: Long) : String{
     val sdf = SimpleDateFormat("MMMM dd, YYYY")
     return sdf.format(calendar.time)
 }
-
-//
-//enum class Priority {
-//    DEFAULT,
-//    LOW,
-//    MEDIUM,
-//    HIGH
-//}

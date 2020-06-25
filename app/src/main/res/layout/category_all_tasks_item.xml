@@ -7,6 +7,9 @@
         <variable
             name="clickListener"
             type="ro.twodoors.todolist.view.OnClickListener" />
+        <variable
+            name="title"
+            type="String" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -19,11 +22,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:backgroundTint="@android:color/holo_green_light">
+        android:backgroundTint="@color/colorPrimary">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:onClick="@{() -> clickListener.onCategorySelected(title)}">
 
             <TextView
                 android:id="@+id/lblAllTasks"

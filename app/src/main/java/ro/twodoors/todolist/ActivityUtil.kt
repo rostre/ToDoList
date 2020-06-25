@@ -9,7 +9,5 @@ import ro.twodoors.todolist.viewmodel.ViewModelFactory
 fun <T : ViewModel> Activity.obtainViewModel(viewModelClass: Class<T>): T {
     val todoRepository = (this.application as TodoApplication).todoRepository
     return ViewModelProvider(this as ViewModelStoreOwner, ViewModelFactory(todoRepository)).get(
-        viewModelClass
-    )
-
+        viewModelClass)
 }

@@ -1,13 +1,12 @@
-package ro.twodoors.todolist.view
+package ro.twodoors.todolist.view.adapter
 
+import android.content.Context
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.list_item.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import ro.twodoors.todolist.databinding.ListItemBinding
 import ro.twodoors.todolist.model.Todo
 
@@ -18,7 +17,9 @@ class MainAdapter(val onClickListener : OnClickListener) : ListAdapter<Todo, Mai
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
-        return TodoViewHolder.from(parent)
+        return TodoViewHolder.from(
+            parent
+        )
     }
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
@@ -29,15 +30,19 @@ class MainAdapter(val onClickListener : OnClickListener) : ListAdapter<Todo, Mai
     class TodoViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(item: Todo, clickListener: OnClickListener){
             binding.todo = item
+            val sharedPref = itemView.context.getSharedPreferences("CATEGORY", Context.MODE_PRIVATE)
+            binding.txtTaskColor.setBackgroundColor(sharedPref.getInt(item.categoryName, 0))
             binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 
         companion object{
-            fun from(parent: ViewGroup) : TodoViewHolder{
+            fun from(parent: ViewGroup) : TodoViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ListItemBinding.inflate(layoutInflater, parent, false)
-                return TodoViewHolder(binding)
+                return TodoViewHolder(
+                    binding
+                )
             }
         }
     }

@@ -1,4 +1,4 @@
-package ro.twodoors.todolist.view
+package ro.twodoors.todolist.view.activity
 
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_add_task.*
 import ro.twodoors.todolist.R
 import ro.twodoors.todolist.obtainViewModel
+import ro.twodoors.todolist.view.adapter.SpinnerCategoryAdapter
 import ro.twodoors.todolist.viewmodel.AddViewModel
 import java.util.*
 
@@ -41,7 +42,11 @@ class AddTaskActivity : AppCompatActivity() {
         }
 
         addViewModel.allCategories.observe(this, Observer { categoriesList ->
-            spinnerAdapter = SpinnerCategoryAdapter(this, categoriesList)
+            spinnerAdapter =
+                SpinnerCategoryAdapter(
+                    this,
+                    categoriesList
+                )
             spinner.adapter = spinnerAdapter
         })
 

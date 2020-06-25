@@ -1,10 +1,11 @@
-package ro.twodoors.todolist.view
+package ro.twodoors.todolist.view.activity
 
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -18,9 +19,15 @@ import ro.twodoors.todolist.R
 import ro.twodoors.todolist.databinding.ActivityMainBinding
 import ro.twodoors.todolist.obtainViewModel
 import ro.twodoors.todolist.utils.SwipeToDeleteCallback
+import ro.twodoors.todolist.view.adapter.CategoryAdapter
+import ro.twodoors.todolist.view.adapter.MainAdapter
+import ro.twodoors.todolist.view.OnClickListener
+import ro.twodoors.todolist.view.fragment.AddCategoryFragment
 import ro.twodoors.todolist.viewmodel.TodoViewModel
 
-class MainActivity : AppCompatActivity(), MainAdapter.OnClickListener, OnClickListener {
+class MainActivity : AppCompatActivity(),
+    MainAdapter.OnClickListener,
+    OnClickListener {
 
     private lateinit var viewModel: TodoViewModel
 
@@ -33,8 +40,18 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnClickListener, OnClickLi
 
         val adapter = MainAdapter(this)
         recyclerView.adapter = adapter
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0 && fab.visibility == View.VISIBLE){
+                    fab.hide()
+                } else if (dy < 0 && fab.visibility != View.VISIBLE)
+                    fab.show()
+            }
+        })
 
-        val categoryAdapter = CategoryAdapter(this)
+        val categoryAdapter =
+            CategoryAdapter(this)
         recyclerViewCategory.adapter = categoryAdapter
 
         viewModel.allCategories.observe(this, Observer { categories ->
@@ -43,6 +60,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnClickListener, OnClickLi
 
         viewModel.allTodos.observe(this, Observer { todos ->
                 binding.hasTasks = !todos.isNullOrEmpty()
+                categoryAdapter.setTodos(todos)
                 adapter.submitList(todos)
         })
 
@@ -57,7 +75,6 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnClickListener, OnClickLi
 
         fab.setOnClickListener {
             val intent = Intent(this, AddTaskActivity::class.java)
-            //val intent = Intent(this, AddCategoryActivity::class.java)
             startActivity(intent)
         }
 
@@ -77,31 +94,32 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnClickListener, OnClickLi
     }
 
     override fun onCategorySelected(title: String) {
-        //viewModel.getTasksByCategory(title)
         val intent = Intent(this, CategoryActivity::class.java)
         intent.putExtra("CAT", title)
         startActivity(intent)
     }
 
     override fun addCategory() {
-        val input = TextInputEditText(this)
-        val layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        input.layoutParams = layoutParams
-        input.hint = "Category Name"
-
-        AlertDialog.Builder(this)
-            .setTitle("Add Category")
-            .setView(input)
-            .setPositiveButton("Save") { _, _ ->
-                val name = input.text.toString()
-                viewModel.insertCategory(name)
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-
+        showAddCategoryFragment()
+//        val intent = Intent(this, AddCategoryActivity::class.java)
+//        startActivity(intent)
+//        val input = TextInputEditText(this)
+//        val layoutParams = LinearLayout.LayoutParams(
+//            LinearLayout.LayoutParams.MATCH_PARENT,
+//            LinearLayout.LayoutParams.WRAP_CONTENT
+//        )
+//        input.layoutParams = layoutParams
+//        input.hint = "Category Name"
+//
+//        AlertDialog.Builder(this)
+//            .setTitle("Add Category")
+//            .setView(input)
+//            .setPositiveButton("Save") { _, _ ->
+//                val name = input.text.toString()
+//                viewModel.insertCategory(name)
+//            }
+//            .setNegativeButton("Cancel", null)
+//            .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -121,5 +139,10 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnClickListener, OnClickLi
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showAddCategoryFragment() {
+        val bottomSheetFragment = AddCategoryFragment()
+        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
     }
 }

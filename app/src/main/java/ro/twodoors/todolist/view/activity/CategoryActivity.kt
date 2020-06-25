@@ -1,23 +1,19 @@
-package ro.twodoors.todolist.view
+package ro.twodoors.todolist.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_category.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import ro.twodoors.todolist.R
-import ro.twodoors.todolist.databinding.ActivityCategoryBinding
 import ro.twodoors.todolist.obtainViewModel
 import ro.twodoors.todolist.utils.SwipeToDeleteCallback
+import ro.twodoors.todolist.view.adapter.MainAdapter
 import ro.twodoors.todolist.viewmodel.CategoryViewModel
 
-class CategoryActivity : AppCompatActivity(), MainAdapter.OnClickListener {
+class CategoryActivity : AppCompatActivity(),
+    MainAdapter.OnClickListener {
 
     private lateinit var viewModel: CategoryViewModel
 
@@ -29,18 +25,24 @@ class CategoryActivity : AppCompatActivity(), MainAdapter.OnClickListener {
 
         viewModel = obtainViewModel(CategoryViewModel::class.java)
 
-
         val adapter = MainAdapter(this)
         rvTasksByCategory.adapter = adapter
         viewModel.allTodos.observe(this, Observer { todos ->
-            val result = todos
-                .filter { it ->
-                it.categoryName == title }
-                .sortedBy { it ->
-                it.title
+            if (title != "ALL TASKS"){
+                val result = todos
+                    .filter { it ->
+                        it.categoryName == title }
+                    .sortedBy { it ->
+                        it.title
+                    }
+                adapter.submitList(result)
+                txtAllTasks.text = result.count().toString()
+            } else{
+                adapter.submitList(todos)
+                txtAllTasks.text = todos.count().toString()
             }
-            adapter.submitList(result)
-            txtAllTasks.text = result.count().toString()
+
+
         })
 
         val swipeHandler = object : SwipeToDeleteCallback(this){

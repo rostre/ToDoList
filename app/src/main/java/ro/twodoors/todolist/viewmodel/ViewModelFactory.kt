@@ -16,6 +16,8 @@ class ViewModelFactory constructor(private val todoRepository: TodoRepository) :
                     AddViewModel(todoRepository)
                 isAssignableFrom(CategoryViewModel::class.java) ->
                     CategoryViewModel(todoRepository)
+                isAssignableFrom(AddCategoryViewModel::class.java) ->
+                    AddCategoryViewModel(todoRepository)
                 else ->
                     throw IllegalArgumentException("ViewModel class (${modelClass.name}) is not mapped")
             }

@@ -27,9 +27,6 @@ class AddViewModel(private val repository: TodoRepository) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO){
             repository.insert(todo)
         }
-//        viewModelScope.launch(Dispatchers.IO){
-//            repository.updateCategory(todo.category)
-//        }
         return null
     }
 
