@@ -5,8 +5,12 @@ package ro.twodoors.todolist.utils
 import android.app.Activity
 import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.BindingAdapter
-import ro.twodoors.todolist.view.activity.MainActivity
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import kotlinx.coroutines.withContext
+import ro.twodoors.todolist.view.fragment.AddCategoryFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,6 +23,16 @@ fun View.bindIsGone(isGone: Boolean) {
     }
 }
 
+fun View.hideKeyboard(){
+    val inputMethodManager = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
+}
+
+
+fun showAddCategoryFragment(activity: Activity) {
+    val bottomSheetFragment = AddCategoryFragment(activity)
+    bottomSheetFragment.show((activity as FragmentActivity).supportFragmentManager, bottomSheetFragment.tag)
+}
 //fun getColorFromSharedPref(activity: Activity, key: String) : Int {
 //    val sharedPref = activity.getPreferences(Context.MODE_PRIVATE) ?: return 0
 //    return sharedPref.getInt(key, 0)
@@ -32,7 +46,12 @@ fun View.bindIsGone(isGone: Boolean) {
 
 fun convertLongToString(timeInMillis: Long) : String{
     val calendar = Calendar.getInstance()
+    val currentYear = calendar.get(Calendar.YEAR)
     calendar.timeInMillis = timeInMillis
-    val sdf = SimpleDateFormat("MMMM dd, YYYY")
-    return sdf.format(calendar.time)
+    val year = calendar.get(Calendar.YEAR)
+    return when (currentYear) {
+        year -> SimpleDateFormat("dd MMMM").format(calendar.time)
+        else -> SimpleDateFormat("dd MMM, YYYY").format(calendar.time)
+    }
+    //return sdf.format(calendar.time)
 }

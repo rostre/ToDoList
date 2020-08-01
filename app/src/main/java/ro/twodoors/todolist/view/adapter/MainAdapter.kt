@@ -1,9 +1,13 @@
 package ro.twodoors.todolist.view.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.shapes.Shape
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +35,21 @@ class MainAdapter(val onClickListener : OnClickListener) : ListAdapter<Todo, Mai
         fun bind(item: Todo, clickListener: OnClickListener){
             binding.todo = item
             val sharedPref = itemView.context.getSharedPreferences("CATEGORY", Context.MODE_PRIVATE)
-            binding.txtTaskColor.setBackgroundColor(sharedPref.getInt(item.categoryName, 0))
+            val color = sharedPref.getInt(item.categoryName, 0)
+            val gradientDrawable = GradientDrawable()
+
+            gradientDrawable.cornerRadius = 32F
+            gradientDrawable.setColor(color)
+            binding.txtTaskColor.background = gradientDrawable
+//            binding.taskContainer.setBackgroundColor(ColorUtils.blendARGB(color, Color.WHITE, 0.95F))
+
+            val gradientDrawableOutline = GradientDrawable()
+            gradientDrawableOutline.cornerRadius = 24F
+            gradientDrawableOutline.setStroke(4, sharedPref.getInt(item.categoryName, 0))
+            gradientDrawableOutline.setColor(ColorUtils.blendARGB(color, Color.WHITE, 0.95F))
+            binding.taskContainer.background = gradientDrawableOutline
+
+            //binding.txtTaskColor.setBackgroundColor(sharedPref.getInt(item.categoryName, 0))
             binding.clickListener = clickListener
             binding.executePendingBindings()
         }

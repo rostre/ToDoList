@@ -22,6 +22,8 @@ class AddViewModel(private val repository: TodoRepository) : ViewModel() {
 
     fun save(): String? {
         if (todo.title == "") return "Title is required"
+        if(todo.categoryName.isEmpty())
+            return "Category is required"
 
         todo.createdOn = System.currentTimeMillis()
         viewModelScope.launch(Dispatchers.IO){

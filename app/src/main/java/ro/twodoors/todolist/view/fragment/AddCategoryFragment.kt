@@ -1,5 +1,6 @@
 package ro.twodoors.todolist.view.fragment
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,7 @@ import ro.twodoors.todolist.view.activity.MainActivity
 import ro.twodoors.todolist.viewmodel.AddCategoryViewModel
 import yuku.ambilwarna.AmbilWarnaDialog
 
-class AddCategoryFragment : BottomSheetDialogFragment() {
+class AddCategoryFragment(val activity: Activity) : BottomSheetDialogFragment() {
 
     private var categoryColor : Int = 0
 
@@ -26,7 +27,7 @@ class AddCategoryFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val viewModel = (activity as MainActivity).obtainViewModel(AddCategoryViewModel::class.java)
+        val viewModel = activity.obtainViewModel(AddCategoryViewModel::class.java)
 
         dialog?.setOnShowListener {bottomSheet ->
             val bottomSheetDialog = bottomSheet as BottomSheetDialog
@@ -38,7 +39,7 @@ class AddCategoryFragment : BottomSheetDialogFragment() {
             DataBindingUtil.inflate<FragmentAddCategoryBinding>(inflater, R.layout.fragment_add_category, container, false)
         addCategoryBinding.lifecycleOwner = this
 
-        categoryColor = ContextCompat.getColor(activity as MainActivity,R.color.colorPrimary)
+        categoryColor = ContextCompat.getColor(activity,R.color.colorPrimary)
         addCategoryBinding.txtColorPicker.setOnClickListener {
             openColorPicker(it)
         }
@@ -50,7 +51,7 @@ class AddCategoryFragment : BottomSheetDialogFragment() {
             if (message != null) {
                 Snackbar.make(it, message, Snackbar.LENGTH_LONG).show()
             } else {
-                viewModel.saveColorToSharedPref(activity as MainActivity, addCategoryBinding.etCategoryName.text.toString(), categoryColor)
+                viewModel.saveColorToSharedPref(activity, addCategoryBinding.etCategoryName.text.toString(), categoryColor)
                 dismiss()
             }
         }

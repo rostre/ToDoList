@@ -24,10 +24,10 @@ private val ITEM_VIEW_TYPE_ITEM = 1
 private val ITEM_VIEW_TYPE_ADD_CATEGORY = 2
 
 
-class CategoryAdapter(val onClickListener: OnClickListener) : ListAdapter<DataItem, RecyclerView.ViewHolder>(
-    CategoryDiffCallback()
-) {
-    var tasks: List<Todo> = listOf()
+class CategoryAdapter(val onClickListener: OnClickListener)
+    : ListAdapter<DataItem, RecyclerView.ViewHolder>(CategoryDiffCallback()) {
+
+    private var tasks: List<Todo> = listOf()
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
     fun populateCategories(list : List<Category>?){
@@ -107,7 +107,8 @@ class CategoryAdapter(val onClickListener: OnClickListener) : ListAdapter<DataIt
             }
 
             is AllTasksViewHolder -> {
-                holder.bind("ALL TASKS", onClickListener )
+                holder.bind("All Tasks", onClickListener )
+                holder.displayAllTasks(tasks.count())
             }
 
             is AddCategoryViewHolder -> {
@@ -121,6 +122,10 @@ class CategoryAdapter(val onClickListener: OnClickListener) : ListAdapter<DataIt
             binding.title = title
             binding.clickListener = clickListener
             binding.executePendingBindings()
+        }
+
+        fun displayAllTasks(noOfTasks: Int){
+            binding.tvAllTasksCount.text = noOfTasks.toString()
         }
 
         companion object{

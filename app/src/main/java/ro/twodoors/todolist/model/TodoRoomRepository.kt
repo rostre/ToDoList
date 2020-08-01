@@ -26,14 +26,6 @@ class TodoRoomRepository(private val todoDao: TodoDao) : TodoRepository {
         return todoDao.getAllCategories()
     }
 
-    override fun getTasksForCategory(categoryName: String): LiveData<Int> {
-        return todoDao.getTasksForCategory(categoryName)
-    }
-
-    override fun getCategories(): List<Category> {
-        return todoDao.getCategories()
-    }
-
     override suspend fun completeTodo(id: Int, isChecked: Boolean) {
         todoDao.completeTodo(id, isChecked)
     }
@@ -52,6 +44,10 @@ class TodoRoomRepository(private val todoDao: TodoDao) : TodoRepository {
 
     override suspend fun delete(todo: Todo){
         todoDao.delete(todo)
+    }
+
+    override suspend fun deleteCategory(categoryName: String) {
+        todoDao.deleteCategory(categoryName)
     }
 
     override suspend fun deleteAll() {

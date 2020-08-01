@@ -15,14 +15,14 @@ class CategoryViewModel(private val repository: TodoRepository) : ViewModel() {
         repository.completeTodo(id, isChecked)
     }
 
-    fun getTasksForCategory(categoryName: String) : LiveData<Int> {
-        return repository.getTasksForCategory(categoryName)
-    }
-
     val allTodos : LiveData<List<Todo>> = repository.getAllTodos()
 
     fun delete(todo: Todo) = viewModelScope.launch(Dispatchers.IO){
         repository.delete(todo)
+    }
+
+    fun deleteCategory(categoryName: String) = viewModelScope.launch (Dispatchers.IO){
+        repository.deleteCategory(categoryName)
     }
 
 }

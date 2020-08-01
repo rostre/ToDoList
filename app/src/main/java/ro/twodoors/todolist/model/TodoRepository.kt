@@ -12,11 +12,7 @@ interface TodoRepository {
 
     fun getAllCategories(): LiveData<List<Category>>
 
-    fun getTasksForCategory(categoryName: String) : LiveData<Int>
-
     fun getCategoryNames(): LiveData<List<String>>
-
-    fun getCategories(): List<Category>
 
     suspend fun completeTodo(id: Int, isChecked: Boolean)
 
@@ -25,6 +21,8 @@ interface TodoRepository {
     suspend fun insertCategory(category: Category)
 
     suspend fun update(todo: Todo)
+
+    suspend fun deleteCategory(categoryName: String)
 
     suspend fun delete(todo: Todo)
 

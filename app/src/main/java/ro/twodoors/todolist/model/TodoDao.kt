@@ -15,6 +15,9 @@ interface TodoDao {
     @Delete
     suspend fun delete(todo: Todo)
 
+    @Query("DELETE FROM category_table WHERE name = :categoryName")
+    suspend fun deleteCategory(categoryName: String)
+
     @Query("DELETE FROM todo_table")
     suspend fun deleteAll()
 
@@ -41,12 +44,6 @@ interface TodoDao {
 
     @Query("SELECT name FROM category_table ORDER BY name")
     fun getCategoryNames() : LiveData<List<String>>
-
-    @Query("SELECT COUNT(*) FROM todo_table WHERE categoryName = :categoryName ORDER BY title")
-    fun getTasksForCategory(categoryName: String) : LiveData<Int>
-
-    @Query("SELECT * FROM category_table ORDER BY name")
-    fun getCategories() : List<Category>
 
     @Update
     suspend fun updateCategory(category: Category)

@@ -1,24 +1,23 @@
 package ro.twodoors.todolist.view.activity
 
-import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import ro.twodoors.todolist.R
 import ro.twodoors.todolist.databinding.ActivityMainBinding
 import ro.twodoors.todolist.obtainViewModel
 import ro.twodoors.todolist.utils.SwipeToDeleteCallback
+import ro.twodoors.todolist.utils.showAddCategoryFragment
 import ro.twodoors.todolist.view.adapter.CategoryAdapter
 import ro.twodoors.todolist.view.adapter.MainAdapter
 import ro.twodoors.todolist.view.OnClickListener
@@ -35,6 +34,9 @@ class MainActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView( R.layout.activity_main)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setSupportActionBar(toolbar_main)
+        window.statusBarColor = Color.BLACK
+        toolbar_main.setBackgroundColor(Color.BLACK)
         binding.lifecycleOwner = this
         viewModel = obtainViewModel(TodoViewModel::class.java)
 
@@ -100,7 +102,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun addCategory() {
-        showAddCategoryFragment()
+        showAddCategoryFragment(this)
 //        val intent = Intent(this, AddCategoryActivity::class.java)
 //        startActivity(intent)
 //        val input = TextInputEditText(this)
@@ -123,7 +125,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.options_menu, menu)
+        menuInflater.inflate(R.menu.menu_options, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -131,6 +133,7 @@ class MainActivity : AppCompatActivity(),
         when(item.itemId){
             R.id.deleteCompletedTasks -> {
                 viewModel.deleteCompletedTasks()
+                return true
             }
 
             R.id.deleteAll -> {
@@ -141,8 +144,10 @@ class MainActivity : AppCompatActivity(),
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showAddCategoryFragment() {
-        val bottomSheetFragment = AddCategoryFragment()
-        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
-    }
+
+
+//    private fun showAddCategoryFragment() {
+//        val bottomSheetFragment = AddCategoryFragment()
+//        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+//    }
 }
