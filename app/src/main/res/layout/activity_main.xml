@@ -34,15 +34,18 @@
                 <LinearLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:isGone="@{hasTasks}"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="@+id/include"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewCategory"
+                    tools:layout_editor_absoluteX="-80dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_check_circle_black_124dp" />
+                            android:src="@drawable/no_tasks" />
 
                         <TextView
                             android:id="@+id/empty_garden"
@@ -51,6 +54,7 @@
                             android:layout_marginTop="16dp"
                             android:text="@string/empty_list"
                             android:textAppearance="?attr/textAppearanceHeadline5"
+                            android:textColor="@android:color/darker_gray"
                             android:textSize="22sp" />
                 </LinearLayout>
 
@@ -65,6 +69,7 @@
                     tools:listitem="@layout/category_list_item" />
 
                 <include
+                    android:id="@+id/include"
                     layout="@layout/content_main"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

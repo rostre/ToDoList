@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ro.twodoors.todolist.utils.BaseTextInputEditText
+        <ro.twodoors.simplelist.utils.BaseTextInputEditText
             android:id="@+id/etCategoryName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

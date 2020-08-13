@@ -6,20 +6,19 @@
     <data>
         <variable
             name="clickListener"
-            type="ro.twodoors.todolist.view.OnClickListener" />
+            type="ro.twodoors.simplelist.view.OnClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="180dp"
-        android:layout_height="150dp"
+        android:layout_height="180dp"
         android:elevation="4dp"
         app:cardCornerRadius="8dp"
         app:cardUseCompatPadding="true"
         app:contentPadding="4dp"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:backgroundTint="@color/colorAccent">
+        android:layout_marginRight="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -35,7 +34,6 @@
                 android:text="@string/add_category"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="@android:color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -47,7 +45,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvAddCategory" />
+                app:layout_constraintTop_toTopOf="@+id/tvAddCategory" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

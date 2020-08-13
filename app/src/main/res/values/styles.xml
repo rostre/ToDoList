@@ -47,4 +47,9 @@
         <item name="android:tint">@android:color/white</item>
     </style>
 
+    <style name="CircularProgressBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/progress_bar</item>
+    </style>
+
 </resources>

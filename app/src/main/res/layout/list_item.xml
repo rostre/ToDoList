@@ -4,14 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="ro.twodoors.todolist.utils.BindingUtilsKt"/>
+        <import type="ro.twodoors.simplelist.utils.BindingUtilsKt"/>
         <import type="android.view.View"/>
         <variable
             name="todo"
-            type="ro.twodoors.todolist.model.Todo" />
+            type="ro.twodoors.simplelist.model.Todo" />
         <variable
             name="clickListener"
-            type="ro.twodoors.todolist.view.adapter.MainAdapter.OnClickListener" />
+            type="ro.twodoors.simplelist.view.adapter.TodoAdapter.OnClickListener" />
     </data>
 
 
