@@ -21,27 +21,26 @@ import ro.twodoors.simplelist.utils.SwipeToDeleteCallback
 import ro.twodoors.simplelist.utils.showAddCategoryFragment
 import ro.twodoors.simplelist.view.adapter.CategoryAdapter
 import ro.twodoors.simplelist.view.adapter.TodoAdapter
-import ro.twodoors.simplelist.view.OnClickListener
+import ro.twodoors.simplelist.view.CategoryClickListener
+import ro.twodoors.simplelist.view.TodoClickListener
 import ro.twodoors.simplelist.viewmodel.TodoViewModel
 
-class MainActivity : AppCompatActivity(),
-    TodoAdapter.OnClickListener,
-    OnClickListener {
+class MainActivity : AppCompatActivity(), TodoClickListener, CategoryClickListener {
 
     private lateinit var viewModel: TodoViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView( R.layout.activity_main)
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        setSupportActionBar(toolbar_main)
-        window.statusBarColor = Color.BLACK
-        toolbar_main.setBackgroundColor(Color.BLACK)
-        binding.lifecycleOwner = this
-        viewModel = obtainViewModel(TodoViewModel::class.java)
 
-        val adapter = TodoAdapter(this)
-        recyclerView.adapter = adapter
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.lifecycleOwner = this
+
+        viewModel = obtainViewModel(TodoViewModel::class.java)
+        setupActionBar()
+
+        val todoAdapter = TodoAdapter(this)
+        recyclerView.adapter = todoAdapter
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -62,7 +61,7 @@ class MainActivity : AppCompatActivity(),
         viewModel.allTodos.observe(this, Observer { todos ->
                 binding.hasTasks = !todos.isNullOrEmpty()
                 categoryAdapter.setTodos(todos)
-                adapter.submitList(todos)
+                todoAdapter.submitList(todos)
         })
 
         viewModel.todosCompletedCount.observe(this, Observer {count ->
@@ -81,7 +80,7 @@ class MainActivity : AppCompatActivity(),
 
         val swipeHandler = object : SwipeToDeleteCallback(this@MainActivity){
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val swipedTask = adapter.getTodoAtPosition(viewHolder.adapterPosition)
+                val swipedTask = todoAdapter.getTodoAtPosition(viewHolder.adapterPosition)
                 viewModel.delete(swipedTask)
             }
         }
@@ -90,12 +89,18 @@ class MainActivity : AppCompatActivity(),
 
     }
 
-    override fun onCheckboxChecked(id: Int, isChecked: Boolean) {
+    private fun setupActionBar(){
+        setSupportActionBar(toolbar_main)
+        window.statusBarColor = Color.BLACK
+        toolbar_main.setBackgroundColor(Color.BLACK)
+    }
+
+    override fun onCheckboxSelected(id: Int, isChecked: Boolean) {
         viewModel.completeTodo(id, isChecked)
     }
 
     override fun onCategorySelected(title: String) {
-        val intent = Intent(this, CategoryActivity::class.java)
+        val intent = Intent(this, CategoryDetailActivity::class.java)
         intent.putExtra(CATEGORY_TITLE_KEY, title)
         startActivity(intent)
     }

@@ -15,6 +15,7 @@ import ro.twodoors.simplelist.R
 import ro.twodoors.simplelist.databinding.FragmentAddCategoryBinding
 import ro.twodoors.simplelist.obtainViewModel
 import ro.twodoors.simplelist.utils.SharedPrefsHelper
+import ro.twodoors.simplelist.utils.SharedPrefsHelper.Companion.saveColorToPref
 import ro.twodoors.simplelist.viewmodel.AddCategoryViewModel
 import yuku.ambilwarna.AmbilWarnaDialog
 
@@ -30,7 +31,8 @@ class AddCategoryFragment(val activity: Activity) : BottomSheetDialogFragment() 
         val addCategoryViewModel = activity.obtainViewModel(AddCategoryViewModel::class.java)
 
         setupShowDialog()
-        categoryColor = ContextCompat.getColor(activity, R.color.colorPrimary)
+        //categoryColor = ContextCompat.getColor( activity, R.color.colorPrimary)
+        categoryColor = ContextCompat.getColor(requireActivity(), R.color.colorPrimary)
 
         val addCategoryBinding =
             DataBindingUtil.inflate<FragmentAddCategoryBinding>(inflater, R.layout.fragment_add_category, container, false).apply {
@@ -45,7 +47,8 @@ class AddCategoryFragment(val activity: Activity) : BottomSheetDialogFragment() 
                 if (message != null) {
                     Snackbar.make(it, message, Snackbar.LENGTH_LONG).show()
                 } else {
-                    SharedPrefsHelper.saveColorToPref(activity, etCategoryName.text.toString(), categoryColor)
+                    //SharedPrefsHelper.saveColorToPref(activity, etCategoryName.text.toString(), categoryColor)
+                    saveColorToPref(requireContext(), etCategoryName.text.toString(), categoryColor)
 
                     dismiss()
                 }
@@ -68,7 +71,8 @@ class AddCategoryFragment(val activity: Activity) : BottomSheetDialogFragment() 
     }
 
     private fun openColorPicker(view: View) {
-        val colorPicker = AmbilWarnaDialog(activity, categoryColor, object : AmbilWarnaDialog.OnAmbilWarnaListener{
+        //val colorPicker = AmbilWarnaDialog(activity, categoryColor, object : AmbilWarnaDialog.OnAmbilWarnaListener{
+            val colorPicker = AmbilWarnaDialog(requireContext(), categoryColor, object : AmbilWarnaDialog.OnAmbilWarnaListener{
             override fun onCancel(dialog: AmbilWarnaDialog?) {}
 
             override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {

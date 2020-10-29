@@ -9,7 +9,7 @@
             type="ro.twodoors.simplelist.model.Category" />
         <variable
             name="clickListener"
-            type="ro.twodoors.simplelist.view.OnClickListener" />
+            type="ro.twodoors.simplelist.view.CategoryClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -93,7 +93,7 @@
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
                 tools:text="7 completed"
-                android:textSize="9dp"
+                android:textSize="9sp"
                 android:background="@drawable/rounded_corners"
                 tools:backgroundTint="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -112,7 +112,7 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 tools:text="2 left"
-                android:textSize="9dp"
+                android:textSize="9sp"
                 android:textColor="#ff8383"
                 android:background="@drawable/rounded_corners"
                 android:backgroundTint="#ffebeb"

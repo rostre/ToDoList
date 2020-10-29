@@ -6,14 +6,15 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ro.twodoors.simplelist.model.Category
+import ro.twodoors.simplelist.model.CategoryRepository
 import ro.twodoors.simplelist.model.Todo
 import ro.twodoors.simplelist.model.TodoRepository
 
-class TodoViewModel(private val repository: TodoRepository) : ViewModel()   {
+class TodoViewModel(private val repository: TodoRepository, categoryRepo: CategoryRepository) : ViewModel()   {
 
     val allTodos : LiveData<List<Todo>> = repository.getAllTodos()
 
-    val allCategories : LiveData<List<Category>> = repository.getAllCategories()
+    val allCategories : LiveData<List<Category>> = categoryRepo.getAllCategories()
 
     val allTodosCount : LiveData<Int> = repository.getAllTodosCount()
 

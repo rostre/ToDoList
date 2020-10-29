@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/country_item_height"
-    android:paddingLeft="@dimen/general_margin"
-    android:paddingRight="@dimen/general_margin">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/ivCountry"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/circle"
-        tools:src="@drawable/circle" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/country_item_height"
+        android:paddingLeft="@dimen/general_margin"
+        android:paddingRight="@dimen/general_margin">
 
-    <TextView
-        android:id="@+id/tvCountry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/general_margin"
-        android:layout_toEndOf="@id/ivCountry"
-        android:layout_centerVertical="true"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="18sp"
-        tools:text="United Kingdom"/>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tvCategoryItemColor"
+            android:layout_width="@dimen/general_margin"
+            android:layout_height="@dimen/general_margin"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            tools:background="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/tvCategoryItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/general_margin"
+            android:layout_toEndOf="@id/tvCategoryItemColor"
+            android:layout_centerVertical="true"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp"
+            tools:text="Shopping List" />
+    </RelativeLayout>
+</layout>

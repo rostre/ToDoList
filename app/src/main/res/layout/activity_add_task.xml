@@ -10,31 +10,24 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         tools:context=".view.activity.AddTaskActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_add_task"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@android:color/transparent"
+            android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             android:gravity="start"
             android:minHeight="?android:attr/actionBarSize"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/ic_keyboard_backspace_black_24dp"
-            app:subtitleTextAppearance="@style/ToolbarTitleAppearance"
-            app:titleTextAppearance="@style/ToolbarTitleAppearance" />
+            app:navigationIcon="@drawable/ic_keyboard_backspace_black_24dp" />
 
-        <ro.twodoors.simplelist.utils.BaseTextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_margin="@dimen/general_margin"
             android:hint="@string/title"
             android:inputType="textCapSentences"
             android:maxLines="1"
@@ -42,11 +35,11 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_add_task" />
 
-        <ro.twodoors.simplelist.utils.BaseTextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/general_margin"
             android:gravity="start"
             android:hint="@string/description"
             android:inputType="textCapSentences|textMultiLine"
@@ -60,16 +53,16 @@
             android:id="@+id/btnCreateTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginStart="@dimen/general_margin"
+            android:layout_marginEnd="@dimen/general_margin"
             android:background="@drawable/rounded_corners"
             android:backgroundTint="#F00"
             android:text="@string/create_task"
             android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivTime" />
 
         <Spinner
             android:id="@+id/spinner"
@@ -97,17 +90,16 @@
             android:id="@+id/ivCalendar"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/general_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner"
-            app:srcCompat="@drawable/calendar"
-            tools:visibility="visible" />
+            app:srcCompat="@drawable/ic_date" />
 
         <TextView
             android:id="@+id/txtDueDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="@dimen/general_margin"
             android:ems="10"
             android:inputType="date"
             android:visibility="gone"
@@ -119,11 +111,11 @@
             android:id="@+id/btnAddCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="@dimen/general_margin"
+            android:layout_marginStart="@dimen/general_margin"
+            android:layout_marginEnd="@dimen/general_margin"
             android:padding="8dp"
-            android:text="Add category"
+            android:text="@string/add_category"
             android:textColor="@android:color/white"
             android:background="@drawable/rounded_corners"
             android:backgroundTint="@color/colorAccent"
@@ -135,7 +127,7 @@
             android:id="@+id/switchTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="@dimen/general_margin"
             app:layout_constraintBottom_toBottomOf="@+id/ivTime"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ivTime" />
@@ -144,17 +136,16 @@
             android:id="@+id/ivTime"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/general_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivCalendar"
-            app:srcCompat="@drawable/clock"
-            tools:visibility="visible"/>
+            app:srcCompat="@drawable/ic_clock" />
 
         <TextView
             android:id="@+id/txtTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="@dimen/general_margin"
             android:ems="10"
             android:inputType="time"
             android:visibility="gone"
@@ -162,16 +153,6 @@
             app:layout_constraintStart_toEndOf="@+id/ivTime"
             app:layout_constraintTop_toTopOf="@+id/ivTime" />
 
-        <ImageView
-            android:id="@+id/ivNotification"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_margin="16dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="56dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivTime"
-            app:srcCompat="@drawable/notification" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

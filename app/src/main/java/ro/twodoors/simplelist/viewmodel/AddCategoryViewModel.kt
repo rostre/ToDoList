@@ -5,9 +5,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ro.twodoors.simplelist.model.Category
+import ro.twodoors.simplelist.model.CategoryRepository
 import ro.twodoors.simplelist.model.TodoRepository
 
-class AddCategoryViewModel(private val repository: TodoRepository) : ViewModel(){
+class AddCategoryViewModel(private val categoryRepo: CategoryRepository) : ViewModel(){
 
     val category = Category("")
 
@@ -19,7 +20,7 @@ class AddCategoryViewModel(private val repository: TodoRepository) : ViewModel()
     }
 
     private fun insertCategory(categoryName: String) = viewModelScope.launch (Dispatchers.IO){
-        repository.insertCategory(Category(categoryName))
+        categoryRepo.insertCategory(Category(categoryName))
     }
 
 }

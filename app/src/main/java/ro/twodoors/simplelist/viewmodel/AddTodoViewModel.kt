@@ -4,17 +4,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ro.twodoors.simplelist.model.CategoryRepository
 import ro.twodoors.simplelist.model.Todo
 import ro.twodoors.simplelist.model.TodoRepository
 
-class AddTodoViewModel(private val repository: TodoRepository) : ViewModel() {
+class AddTodoViewModel(
+    private val repository: TodoRepository,
+    categoryRepo: CategoryRepository) : ViewModel() {
 
-    val allCategories = repository.getCategoryNames()
+    val allCategories = categoryRepo.getCategoryNames()
 
     val todo = Todo(
         title = "",
         description = "",
-        categoryName = "",
+        category = "",
         dueDate = null,
         completed = false,
         dueTime = null
@@ -22,7 +25,7 @@ class AddTodoViewModel(private val repository: TodoRepository) : ViewModel() {
 
     fun save(): String? {
         if (todo.title == "") return "Title is required"
-        if(todo.categoryName.isEmpty())
+        if(todo.category.isEmpty())
             return "Category is required"
 
         todo.dueTime = System.currentTimeMillis()

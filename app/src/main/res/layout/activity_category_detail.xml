@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.activity.CategoryActivity">
+        tools:context=".view.activity.CategoryDetailActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_category"
@@ -16,13 +16,14 @@
             android:theme="@style/ToolbarStyle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_keyboard_backspace_black_24dp"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <TextView
             android:id="@+id/lblTasks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/general_margin"
             android:text="@string/tasksCapital"
             android:textAppearance="@android:style/TextAppearance.Material.Title"
             app:layout_constraintStart_toStartOf="parent"

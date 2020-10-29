@@ -23,12 +23,6 @@ fun View.bindIsGone(isGone: Boolean) {
     }
 }
 
-fun View.hideKeyboard(){
-    val inputMethodManager = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-    inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
-}
-
-
 fun showAddCategoryFragment(activity: Activity) {
     val bottomSheetFragment = AddCategoryFragment(activity)
     bottomSheetFragment.show((activity as FragmentActivity).supportFragmentManager, bottomSheetFragment.tag)
@@ -43,5 +37,5 @@ fun convertLongToString(timeInMillis: Long) : String{
         year -> SimpleDateFormat("dd MMMM").format(calendar.time)
         else -> SimpleDateFormat("dd MMM, YYYY").format(calendar.time)
     }
-    //return sdf.format(calendar.time)
 }
+

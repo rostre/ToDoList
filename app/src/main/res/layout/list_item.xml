@@ -11,7 +11,7 @@
             type="ro.twodoors.simplelist.model.Todo" />
         <variable
             name="clickListener"
-            type="ro.twodoors.simplelist.view.adapter.TodoAdapter.OnClickListener" />
+            type="ro.twodoors.simplelist.view.TodoClickListener" />
     </data>
 
 
@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:checked="@={todo.completed}"
-                android:onClick="@{() -> clickListener.onCheckboxChecked(todo.id, todo.completed)}"
+                android:onClick="@{() -> clickListener.onCheckboxSelected(todo.id, todo.completed)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

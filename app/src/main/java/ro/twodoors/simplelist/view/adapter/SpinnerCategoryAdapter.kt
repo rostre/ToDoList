@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import ro.twodoors.simplelist.R
+import ro.twodoors.simplelist.utils.SharedPrefsHelper
 
-class SpinnerCategoryAdapter(context: Context, list: List<String>)
-    : ArrayAdapter<String>(context, 0, list) {
+class SpinnerCategoryAdapter(context: Context, categoriesList: List<String>)
+    : ArrayAdapter<String>(context, 0, categoriesList) {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -23,7 +24,7 @@ class SpinnerCategoryAdapter(context: Context, list: List<String>)
         else {
             view = layoutInflater.inflate(R.layout.category_item, parent, false)
             getItem(position)?.let { category ->
-                setItemForCategory(view, category)
+                setupCategoryItem(view, category)
             }
         }
         return view
@@ -42,7 +43,7 @@ class SpinnerCategoryAdapter(context: Context, list: List<String>)
         } else {
             view = layoutInflater.inflate(R.layout.category_item, parent, false)
             getItem(position)?.let { category ->
-                setItemForCategory(view, category)
+                setupCategoryItem(view, category)
             }
         }
         return view
@@ -59,17 +60,11 @@ class SpinnerCategoryAdapter(context: Context, list: List<String>)
 
     override fun isEnabled(position: Int) = position != 0
 
-    private fun setItemForCategory(view: View, category: String) {
-        val tvCountry = view.findViewById<TextView>(R.id.tvCountry)
-        tvCountry.text = category
+    private fun setupCategoryItem(view: View, category: String) {
+        view.findViewById<TextView>(R.id.tvCategoryItemName)
+            .text = category
 
-        val ivCountry = view.findViewById<TextView>(R.id.ivCountry)
-        ivCountry.setBackgroundColor(getColorFromSharedPref(category))
+        view.findViewById<TextView>(R.id.tvCategoryItemColor)
+            .setBackgroundColor(SharedPrefsHelper.getColorFromPref(context, category))
     }
-
-    fun getColorFromSharedPref(key: String) : Int {
-        val sharedPref = context.getSharedPreferences("CATEGORY", Context.MODE_PRIVATE) ?: return 0
-        return sharedPref.getInt(key, 0)
-    }
-
 }

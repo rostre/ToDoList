@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import ro.twodoors.simplelist.databinding.ListItemBinding
 import ro.twodoors.simplelist.model.Todo
 import ro.twodoors.simplelist.utils.SharedPrefsHelper
+import ro.twodoors.simplelist.view.TodoClickListener
 
-class TodoAdapter(val onClickListener : OnClickListener) : ListAdapter<Todo, TodoAdapter.TodoViewHolder>(TodoDiffCallback()) {
+class TodoAdapter(val onClickListener : TodoClickListener) : ListAdapter<Todo, TodoAdapter.TodoViewHolder>(TodoDiffCallback()) {
 
-    fun getTodoAtPosition(position: Int) : Todo{
+    fun getTodoAtPosition(position: Int) : Todo {
         return this.currentList[position]
     }
 
@@ -28,9 +29,9 @@ class TodoAdapter(val onClickListener : OnClickListener) : ListAdapter<Todo, Tod
     }
 
     class TodoViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(item: Todo, clickListener: OnClickListener){
+        fun bind(item: Todo, clickListener: TodoClickListener){
             binding.todo = item
-            setupColors(item.categoryName)
+            setupColors(item.category)
             binding.clickListener = clickListener
             binding.executePendingBindings()
         }
@@ -67,9 +68,6 @@ class TodoAdapter(val onClickListener : OnClickListener) : ListAdapter<Todo, Tod
         }
     }
 
-    interface OnClickListener {
-        fun onCheckboxChecked(id: Int, isChecked: Boolean)
-    }
 }
 
 class TodoDiffCallback : DiffUtil.ItemCallback<Todo>() {

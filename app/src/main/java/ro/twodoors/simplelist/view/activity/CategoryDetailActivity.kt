@@ -7,24 +7,26 @@ import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_category.*
+import kotlinx.android.synthetic.main.activity_category_detail.*
 import ro.twodoors.simplelist.R
 import ro.twodoors.simplelist.obtainViewModel
 import ro.twodoors.simplelist.utils.Constants.Companion.CATEGORY_TITLE_KEY
 import ro.twodoors.simplelist.utils.SharedPrefsHelper
+import ro.twodoors.simplelist.utils.SharedPrefsHelper.Companion.getColorFromPref
+import ro.twodoors.simplelist.utils.SharedPrefsHelper.Companion.removeColorFromPref
 import ro.twodoors.simplelist.utils.SwipeToDeleteCallback
+import ro.twodoors.simplelist.view.TodoClickListener
 import ro.twodoors.simplelist.view.adapter.TodoAdapter
 import ro.twodoors.simplelist.viewmodel.CategoryViewModel
 
-class CategoryActivity : AppCompatActivity(),
-    TodoAdapter.OnClickListener {
+class CategoryDetailActivity : AppCompatActivity(), TodoClickListener {
 
     private lateinit var categoryViewModel: CategoryViewModel
     private lateinit var title: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_category)
+        setContentView(R.layout.activity_category_detail)
 
         categoryViewModel = obtainViewModel(CategoryViewModel::class.java)
         setupActionBar()
@@ -35,29 +37,29 @@ class CategoryActivity : AppCompatActivity(),
     private fun setupActionBar(){
         setSupportActionBar(toolbar_category)
         toolbar_category.setNavigationOnClickListener { onBackPressed() }
-        title = intent.getStringExtra(CATEGORY_TITLE_KEY)
+        title = intent.getStringExtra(CATEGORY_TITLE_KEY) ?: ""
         supportActionBar?.title = title
     }
 
     private fun setupColors(){
-        val color = SharedPrefsHelper.getColorFromPref(this, title)
+        val color = getColorFromPref(this, title)
         window.statusBarColor = color
         toolbar_category.setBackgroundColor(color)
     }
 
     private fun setupAdapter(){
-        val adapter = TodoAdapter(this)
-        rvTasksByCategory.adapter = adapter
+        val todoAdapter = TodoAdapter(this)
+        rvTasksByCategory.adapter = todoAdapter
         categoryViewModel.allTodos.observe(this, Observer { todos ->
-            val result = todos.filter { it -> it.categoryName == title }
-                .sortedBy { it -> it.title }
-            adapter.submitList(result)
+            val result = todos.filter { it -> it.category == title }
+                            .sortedBy { it -> it.title }
+            todoAdapter.submitList(result)
             txtAllTasks.text = result.count().toString()
         })
 
         val swipeHandler = object : SwipeToDeleteCallback(this){
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val swipedTodo = adapter.getTodoAtPosition(viewHolder.adapterPosition)
+                val swipedTodo = todoAdapter.getTodoAtPosition(viewHolder.adapterPosition)
                 categoryViewModel.deleteTodo(swipedTodo)
             }
         }
@@ -66,7 +68,7 @@ class CategoryActivity : AppCompatActivity(),
         itemTouchHelper.attachToRecyclerView(rvTasksByCategory)
     }
 
-    override fun onCheckboxChecked(id: Int, isChecked: Boolean) {
+    override fun onCheckboxSelected(id: Int, isChecked: Boolean) {
         categoryViewModel.completeTodo(id, isChecked)
     }
 
@@ -79,7 +81,7 @@ class CategoryActivity : AppCompatActivity(),
         when(item.itemId){
             R.id.deleteCategory -> {
                 categoryViewModel.deleteCategory(title)
-                SharedPrefsHelper.removeColorFromPref(this, title)
+                removeColorFromPref(this, title)
                 finish()
                 return true
             }
