@@ -10,9 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="ro.twodoors.simplelist.view.activity.CategoryDetailActivity"/>
-        <activity android:name="ro.twodoors.simplelist.view.activity.AddTaskActivity" />
-        <activity android:name="ro.twodoors.simplelist.view.activity.MainActivity">
+        <activity android:name="ro.twodoors.simplelist.ui.categorydetail.CategoryDetailActivity"/>
+        <activity android:name="ro.twodoors.simplelist.ui.addtodo.AddTaskActivity" />
+        <activity android:name="ro.twodoors.simplelist.ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

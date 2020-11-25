@@ -5,7 +5,7 @@
     <data>
         <variable
             name="clickListener"
-            type="ro.twodoors.simplelist.view.CategoryClickListener" />
+            type="ro.twodoors.simplelist.ui.main.CategoryClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -22,7 +22,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:onClick="@{() -> clickListener.addCategory()}">
+            android:onClick="@{() -> clickListener.navigateToAddCategory()}">
 
             <TextView
                 android:id="@+id/tvAddCategory"

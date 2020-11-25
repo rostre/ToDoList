@@ -11,4 +11,8 @@
     <color name="priority_low">#fffae0</color>
 
     <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="text_color_tasks_left">#ff8383</color>
+    <color name="bg_color_tasks_left">#ffebeb</color>
+
 </resources>

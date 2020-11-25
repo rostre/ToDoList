@@ -22,5 +22,5 @@
         android:layout_height="@dimen/general_margin"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />
+        android:src="@drawable/ic_arrow_down" />
 </RelativeLayout>

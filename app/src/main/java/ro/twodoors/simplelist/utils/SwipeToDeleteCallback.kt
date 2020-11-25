@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ro.twodoors.simplelist.R
 
 abstract class SwipeToDeleteCallback(
-    private val context : Context
+    context : Context
 ) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
 
     private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete_sweep_white_24dp)!!

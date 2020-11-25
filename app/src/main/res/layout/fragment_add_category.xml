@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
             android:text="@string/add_category"
-            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,54 +28,65 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="64dp"
+            android:layout_marginEnd="16dp"
             android:hint="@string/enter_category_name"
+            android:inputType="textCapSentences"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lblAddCategory"/>
+            app:layout_constraintTop_toBottomOf="@+id/lblAddCategory"
+            tools:text="@string/enter_category_name" />
 
         <TextView
             android:id="@+id/lblColorPicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="64dp"
+            android:padding="0dp"
             android:text="@string/pick_a_color_for_category"
+            android:textColor="?android:textColorHint"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etCategoryName" />
 
         <TextView
             android:id="@+id/txtColorPicker"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:background="@color/colorPrimary"
+            android:padding="0dp"
+            android:background="@drawable/color_picker_category"
             app:layout_constraintBottom_toBottomOf="@+id/lblColorPicker"
             app:layout_constraintStart_toEndOf="@+id/lblColorPicker"
             app:layout_constraintTop_toTopOf="@+id/lblColorPicker" />
 
         <Button
             android:id="@+id/btnSaveCategory"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginBottom="128dp"
-            android:text="@string/save"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="@dimen/general_margin"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="@dimen/general_margin"
+            android:background="@drawable/rounded_corners_24"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/add"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lblColorPicker" />
 
         <Button
             android:id="@+id/btnCancelCategory"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="80dp"
+            android:layout_margin="@dimen/general_margin"
             android:text="@string/cancel"
-            app:layout_constraintBottom_toBottomOf="@+id/btnSaveCategory"
+            android:background="@drawable/rounded_btn_outline"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btnSaveCategory" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSaveCategory" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

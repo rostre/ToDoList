@@ -3,8 +3,7 @@ package ro.twodoors.simplelist.utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
-
-const val CATEGORY_KEY = "CATEGORY"
+import ro.twodoors.simplelist.utils.Constants.Companion.CATEGORY_KEY
 
 class SharedPrefsHelper {
 

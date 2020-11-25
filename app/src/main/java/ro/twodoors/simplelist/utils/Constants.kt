@@ -4,6 +4,7 @@ class Constants {
 
     companion object{
         const val CATEGORY_TITLE_KEY = "CATEGORY_TITLE"
+        const val CATEGORY_KEY = "CATEGORY"
     }
 
 }

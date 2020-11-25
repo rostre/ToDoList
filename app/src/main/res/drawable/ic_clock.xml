@@ -7,7 +7,7 @@
         </shape>
     </item>
     <item
-        android:drawable="@drawable/ic_timer_black_24dp"
+        android:drawable="@drawable/ic_timer"
         android:bottom="10dp"
         android:left="10dp"
         android:right="10dp"

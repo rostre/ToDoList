@@ -4,14 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="ro.twodoors.simplelist.utils.BindingUtilsKt"/>
+        <import type="ro.twodoors.simplelist.utils.DateTimeFormatterKt"/>
         <import type="android.view.View"/>
         <variable
             name="todo"
-            type="ro.twodoors.simplelist.model.Todo" />
+            type="ro.twodoors.simplelist.data.Todo" />
         <variable
             name="clickListener"
-            type="ro.twodoors.simplelist.view.TodoClickListener" />
+            type="ro.twodoors.simplelist.ui.main.TodoClickListener" />
     </data>
 
 
@@ -23,7 +23,7 @@
 
             <CheckBox
                 android:id="@+id/ckbCompleted"
-                style="@style/CustomCheckboxTasks"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -65,26 +65,33 @@
                 app:layout_constraintTop_toBottomOf="@+id/ckbCompleted"
                 tools:text="This is the task description" />
 
-            <ImageView
-                android:id="@+id/ivDueDate"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginStart="4dp"
-                android:src="@drawable/ic_today_black_24dp"
-                app:layout_constraintStart_toEndOf="@+id/txtDueDate"
-                app:layout_constraintTop_toTopOf="@+id/txtDueDate" />
-
             <TextView
                 android:id="@+id/txtDueDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@{BindingUtilsKt.convertLongToString(todo.dueDate)}"
+                android:text="@{DateTimeFormatterKt.formatDate(todo.dueDate)}"
+                android:displayDateTime="@{todo.dueDate}"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"
                 app:layout_constraintBottom_toBottomOf="@+id/txtTaskColor"
                 app:layout_constraintStart_toEndOf="@+id/txtTaskColor"
                 app:layout_constraintTop_toTopOf="@+id/txtTaskColor"
                 tools:text="@tools:sample/date/mmddyy" />
+
+            <TextView
+                android:id="@+id/txtDueTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@{DateTimeFormatterKt.formatTime(todo.dueTime)}"
+                android:drawableStart="@drawable/ic_due_time"
+                android:drawablePadding="4dp"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"
+                app:layout_constraintBottom_toBottomOf="@+id/txtTaskColor"
+                app:layout_constraintStart_toEndOf="@+id/txtDueDate"
+                app:layout_constraintTop_toTopOf="@+id/txtTaskColor"
+                tools:text="@tools:sample/date/mmddyy"
+                android:displayDateTime="@{todo.dueTime}"/>
 
             <TextView
                 android:id="@+id/txtTaskColor"
@@ -93,13 +100,6 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="@+id/title"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/groupDueDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="@{todo.dueDate == null ? View.GONE : View.VISIBLE}"
-                app:constraint_referenced_ids="ivDueDate,txtDueDate" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

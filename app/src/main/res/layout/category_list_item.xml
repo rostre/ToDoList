@@ -6,10 +6,10 @@
     <data>
         <variable
             name="category"
-            type="ro.twodoors.simplelist.model.Category" />
+            type="ro.twodoors.simplelist.data.Category" />
         <variable
             name="clickListener"
-            type="ro.twodoors.simplelist.view.CategoryClickListener" />
+            type="ro.twodoors.simplelist.ui.main.CategoryClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -21,13 +21,12 @@
         app:cardUseCompatPadding="true"
         app:contentPadding="4dp"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
+        android:layout_marginStart="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:onClick="@{() -> clickListener.onCategorySelected(category.name)}">
+            android:onClick="@{() -> clickListener.navigateToCategoryDetail(category.name)}">
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -62,13 +61,16 @@
 
             <TextView
                 android:id="@+id/tvCategoryName"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:maxLines="3"
+                android:layout_marginEnd="8dp"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:text="@{category.name}"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/progressBar"
                 tools:text="Dribbble" />
@@ -94,7 +96,7 @@
                 android:paddingBottom="4dp"
                 tools:text="7 completed"
                 android:textSize="9sp"
-                android:background="@drawable/rounded_corners"
+                android:background="@drawable/rounded_corners_24"
                 tools:backgroundTint="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvCategoryTasks" />
@@ -113,9 +115,9 @@
                 tools:visibility="visible"
                 tools:text="2 left"
                 android:textSize="9sp"
-                android:textColor="#ff8383"
-                android:background="@drawable/rounded_corners"
-                android:backgroundTint="#ffebeb"
+                android:textColor="@color/text_color_tasks_left"
+                android:background="@drawable/rounded_corners_24"
+                android:backgroundTint="@color/bg_color_tasks_left"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tvTasksCompleted" />
 

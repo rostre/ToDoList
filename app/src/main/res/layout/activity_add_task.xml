@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.activity.AddTaskActivity">
+        tools:context=".ui.addtodo.AddTaskActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_add_task"
@@ -19,9 +19,12 @@
             android:fitsSystemWindows="true"
             android:gravity="start"
             android:minHeight="?android:attr/actionBarSize"
+            android:theme="@style/ToolbarStyle"
+            app:title="@string/create_new_task"
+            android:background="@color/colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/ic_keyboard_backspace_black_24dp" />
+            app:navigationIcon="@drawable/ic_back_arrow" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtTitle"
@@ -53,38 +56,27 @@
             android:id="@+id/btnCreateTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
-            android:layout_marginStart="@dimen/general_margin"
-            android:layout_marginEnd="@dimen/general_margin"
-            android:background="@drawable/rounded_corners"
-            android:backgroundTint="#F00"
+            android:layout_margin="16dp"
+            android:background="@drawable/rounded_corners_24"
+            android:backgroundTint="@color/colorAccent"
             android:text="@string/create_task"
             android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivTime" />
+            app:layout_constraintRight_toRightOf="parent" />
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_margin="16dp"
-            android:background="@drawable/blue_outline"
+            android:background="@drawable/rounded_corners_stroke"
             android:popupBackground="@drawable/white_background"
             android:spinnerMode="dropdown"
             app:layout_constraintEnd_toEndOf="@+id/txtDescription"
             app:layout_constraintStart_toStartOf="@+id/txtDescription"
             app:layout_constraintTop_toBottomOf="@+id/txtDescription"
             tools:listheader="@layout/category_item_header" />
-
-        <Switch
-            android:id="@+id/switcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/ivCalendar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/ivCalendar" />
 
         <ImageView
             android:id="@+id/ivCalendar"
@@ -100,37 +92,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/general_margin"
-            android:ems="10"
-            android:inputType="date"
             android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/ivCalendar"
             app:layout_constraintStart_toEndOf="@+id/ivCalendar"
             app:layout_constraintTop_toTopOf="@+id/ivCalendar" />
 
-        <Button
-            android:id="@+id/btnAddCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/general_margin"
-            android:layout_marginStart="@dimen/general_margin"
-            android:layout_marginEnd="@dimen/general_margin"
-            android:padding="8dp"
-            android:text="@string/add_category"
-            android:textColor="@android:color/white"
-            android:background="@drawable/rounded_corners"
-            android:backgroundTint="@color/colorAccent"
-            android:visibility="visible"
-            app:layout_constraintStart_toStartOf="@+id/txtDescription"
-            app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
-
-        <Switch
-            android:id="@+id/switchTime"
+        <TextView
+            android:id="@+id/lblDueDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/general_margin"
-            app:layout_constraintBottom_toBottomOf="@+id/ivTime"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/ivTime" />
+            android:layout_marginStart="@dimen/general_margin"
+            android:text="@string/select_date"
+            android:drawableEnd="@drawable/ic_arrow_down"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/ivCalendar"
+            app:layout_constraintStart_toEndOf="@+id/ivCalendar"
+            app:layout_constraintTop_toTopOf="@+id/ivCalendar" />
+
+        <TextView
+            android:id="@+id/txtNoCategories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/general_margin"
+            android:background="@drawable/rounded_corners_24"
+            android:backgroundTint="@android:color/darker_gray"
+            android:paddingStart="@dimen/general_margin"
+            android:paddingTop="8dp"
+            android:paddingEnd="@dimen/general_margin"
+            android:paddingBottom="8dp"
+            android:text="@string/no_categories_available"
+            android:textColor="@color/white"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/spinner"
+            app:layout_constraintStart_toStartOf="@+id/txtDescription"
+            app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
 
         <ImageView
             android:id="@+id/ivTime"
@@ -146,13 +142,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/general_margin"
-            android:ems="10"
-            android:inputType="time"
             android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/ivTime"
             app:layout_constraintStart_toEndOf="@+id/ivTime"
             app:layout_constraintTop_toTopOf="@+id/ivTime" />
 
+        <TextView
+            android:id="@+id/lblTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/general_margin"
+            android:text="@string/select_time"
+            android:drawableEnd="@drawable/ic_arrow_down"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/ivTime"
+            app:layout_constraintStart_toEndOf="@+id/ivTime"
+            app:layout_constraintTop_toTopOf="@+id/ivTime" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
